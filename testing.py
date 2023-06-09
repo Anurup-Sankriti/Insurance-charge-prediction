@@ -6,7 +6,7 @@ import pickle
 df = pd.read_csv('result_insurance.csv')
 
 
-#Enter data
+#Arbitrary data
 age = 34
 sex = 1
 bmi = 31.2
@@ -26,32 +26,35 @@ if age <=39:
 else: age1 =1
 
 df = df[df['age']==age1]
-#print('age :',df.shape)
+print('age :',df.shape)
 
 df = df[df['sex']==sex]
-#print('sex :',df.shape)
+print('sex :',df.shape)
 
 df = df[df['bmi']==bmi1]
-#print('bmi :',df.shape)
+print('bmi :',df.shape)
 
 df = df[df['children']==children]
-#print('children :',df.shape)
+print('children :',df.shape)
 
 df = df[df['smoker']==smoker]
-#print('smoker :',df.shape)
+print('smoker :',df.shape)
 
 df = df[df['region']==region]
-#print('pdays_bin :',df.shape)
+print('pdays_bin :',df.shape)
 
 pred = df['pred'].item()
 
+# prediction through conditions
 print('insurance charges through conditions:',np.round(pred,3))
 
+
+# prediction through pickling
 with open('model_lr.pkl', 'rb') as file:
     loaded_pickle= pickle.load(file)
 
 data = {'age': [age1], 'sex':[sex], 'bmi':[bmi1], 'children':[children], 'smoker':[smoker], 'region':[region]}
 new_df = pd.DataFrame(data)
-#print(df.to_string())
+
 pred = loaded_pickle.predict(new_df)
 print('Insurance charges through pickle:',list(pred)[0])
